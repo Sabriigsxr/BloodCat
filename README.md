@@ -38,6 +38,7 @@ Once you become aware of their existence, you may realize how close and real onl
   </tr>
 </table>
 
+ 
 <table>
 <tr>
   <td><img src="./pic/nmap1.png" width="100%"></td>
@@ -49,6 +50,16 @@ Once you become aware of their existence, you may realize how close and real onl
 </tr>
 </table>
 
+<table>
+<tr>
+  <td><img src="./pic/map_0.png" width="100%"></td>
+  <td><img src="./pic/hik-image-4.png" width="100%"></td>
+</tr>
+<tr>
+  <td><img src="./pic/hik2.png" width="100%"></td>
+  <td><img src="./pic/hik-image.png" width="100%"></td>
+</tr>
+</table>
 
 <table>
 <tr>
@@ -84,7 +95,7 @@ Once you become aware of their existence, you may realize how close and real onl
 <a href="https://www.youtube.com/watch?v=pEJLMjA7Mx8">
   <img src="https://markdown-videos-api.jorgenkh.no/url?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DpEJLMjA7Mx8" width="100%">
 </a>
-
+ 
 ---
 
 <a href="https://www.youtube.com/watch?v=pxIHwdLPREo">
@@ -656,23 +667,3 @@ $ python3 bloodcat_map_lan.py
 ![alt text](./pic/bloodcat_map_lan-2.png)
 
 ---
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

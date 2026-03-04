@@ -44,7 +44,7 @@ class CamLib():
             "admin",
             "root",
             "system",
-            "camera"
+            "camera",
             "Dinion",
             "admin1",
             "Admin",
@@ -696,7 +696,10 @@ Network Range: {data['network']}
         data = self.send(req, ip, port)
         if not isinstance(data, str):
             log.warning("No response received, please try again later...")
-            return data 
+            return None 
+        if not data.startswith("RTSP/1.0"):
+            log.warning("No response received, please try again later...")
+            return None
         m = re.search(r'(?im)^Server:\s*([^\r\n]+)', data)
         if m:
             log.info(f"Service detected: [{m.group(1)}]",f"{m.group(1)}")

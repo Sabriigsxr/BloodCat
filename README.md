@@ -123,6 +123,7 @@ Once you become aware of their existence, you may realize how close and real onl
 - [Install](#bloodcat-installation)
 - [Bloodcat Workflow](#bloodcat-workflow)
 - [Bloodcat](#bloodcat)
+- [Bloodcat PTZ](#bloodcat-ptz)
 - [Evil bat](#evil-bat)
 - [Shodan cat](#shodan-cat)
 - [PicThief](#picthief)
@@ -147,6 +148,13 @@ Once you become aware of their existence, you may realize how close and real onl
 </a>
  
 ---
+ 
+
+<a href="https://www.youtube.com/watch?v=TSRJITQ5gjc">
+  <img src="https://markdown-videos-api.jorgenkh.no/url?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DTSRJITQ5gjc" width="100%">
+</a>
+
+---
 
 <a href="https://www.youtube.com/watch?v=pxIHwdLPREo">
   <img src="https://markdown-videos-api.jorgenkh.no/url?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DpxIHwdLPREo" width="100%">
@@ -157,6 +165,9 @@ Once you become aware of their existence, you may realize how close and real onl
 <a href="https://www.youtube.com/watch?v=5_WxQEc_P_8">
   <img src="https://markdown-videos-api.jorgenkh.no/url?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D5_WxQEc_P_8" width="100%">
 </a>
+ 
+
+
  
 ---
 
@@ -221,7 +232,7 @@ $ git clone https://github.com/MartinxMax/BloodCat.git
 $ cd BloodCat && python3 -m venv bloodcat
 $ source ./bloodcat/bin/activate
 (bloodcat)$ python -m pip install --upgrade pip
-(bloodcat)$ pip install opencv-python aiohappyeyeballs aiohttp aiosignal async-timeout attrs certifi charset-normalizer frozenlist geoip2 idna maxminddb multidict propcache pycryptodome PyQt5 PyQt5-Qt5 PyQt5_sip PyQtWebEngine PyQtWebEngine-Qt5 requests typing_extensions urllib3 yarl numpy 
+(bloodcat)$ pip install opencv-python aiohappyeyeballs aiohttp aiosignal async-timeout attrs certifi charset-normalizer frozenlist geoip2 idna maxminddb multidict propcache pycryptodome PyQt5 PyQt5-Qt5 PyQt5_sip PyQtWebEngine PyQtWebEngine-Qt5 requests typing_extensions urllib3 yarl numpy pynput
 ``` 
 
 <p align="center">
@@ -776,6 +787,46 @@ Download link : https://github.com/MartinxMax/BloodCat/releases/tag/play
 <p align="center">
   <a href="#bloodcat-index">⬆ Back to Index</a>
 </p>
+
+---
+
+
+
+
+# Bloodcat PTZ 
+
+
+You can use this program to detect whether a target camera can be controlled.
+
+```bash
+(bloodcat)$ python3 bloodcat_ptz.py --help
+```
+
+![alt text](./pic/ptz1.png)
+
+Scan ONVIF ports
+
+```bash
+(bloodcat)$ python3 bloodcat_ptz.py --scan <Target>
+```
+
+![alt text](./pic/ptz2.png)
+
+Start Bloodcat Map and open the camera stream
+
+
+```bash
+(bloodcat)$ python3 bloodcat_ptz.py --ip <ip> --port <ONVIF_PORT> --username <username> --password <password>
+```
+ 
+![alt text](./pic/ptz3.png)
+
+After successful authentication, you can control the camera direction using the numeric keypad.
+
+<p align="center">
+  <a href="#bloodcat-index">⬆ Back to Index</a>
+</p>
+
 
 ---
 

@@ -47,7 +47,7 @@
 
 </div>
 
-<img src="./pic/main/main2.png" width="100%">
+<img src="./pic/display/main2.png" width="100%">
 
 A tool for hacking into publicly exposed network cameras, with support for specifying country and region.
 
@@ -894,4 +894,5 @@ $ python3 bloodcat_map_lan.py
 </p>
 
 ---
+
  

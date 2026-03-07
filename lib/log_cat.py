@@ -15,7 +15,7 @@ class LogCat:
     YELLOW = '\033[33m'     
     PURPLE = '\033[35m'   
     RED = '\033[31m'       
-    GREEN = '\033[102m'      
+    GREEN = '\033[32m'      
     CYAN = '\033[36m'      
     BOLD = '\033[1m'       
 
@@ -58,3 +58,12 @@ class LogCat:
         datetime_str = self._get_english_datetime()
         colored_data = self._highlight(data, high_light)
         print(f"{self.CYAN}[{datetime_str}] [DEBUG]{self.RESET} {colored_data}")
+ 
+    def status(self,msg:str, state:str ="DONE"): 
+        colors = {
+            "DONE": "\033[92m",  
+            "FAIL": "\033[91m",
+            "WARN": "\033[93m"   
+        }
+        color = colors.get(state, "\033[92m")
+        return f"{msg:<50} [ {color}{state}{self.RESET} ]"

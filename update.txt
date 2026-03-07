@@ -1,0 +1,5 @@
+[+] Improved output formatting
+[+] Added RTMP, RTSP, and ONVIF scanning
+[+] Improved filtering logic
+[+] Added PTZ control
+[+] Added a modern GUI interface

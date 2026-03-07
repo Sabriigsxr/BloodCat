@@ -16,6 +16,7 @@ from lib.fofaget import *
 from lib.log_cat import * 
 from lib.version import VERSION
 from lib.update import * 
+from lib.scan import scan
 log = LogCat()
 cam = CamLib()
 upd=  Updater()
@@ -104,55 +105,173 @@ def read_and_exe_hik_credentials(file_path):
     except Exception as e:
         log.error(f"An unknown error occurred while processing the file: {str(e)}")
  
-
 def main():
     print(LOGO)
-    parser = argparse.ArgumentParser(description='Blood Cat - IP Camera Weak Credential Scanner')
+
+    parser = argparse.ArgumentParser(
+        description='Blood Cat - IP Camera Weak Credential Scanner'
+    )
+
     parser.add_argument('--country', default='', type=str, help='Country')
     parser.add_argument('--city', default='', type=str, help='City')
     parser.add_argument('--region', default='', type=str, help='Area')
-    parser.add_argument('--key',  default='', type=str, help='Fofa API key')
-    parser.add_argument('--ip', default='', type=str, help='IP:PORT')
-    parser.add_argument('--ips', default='', type=str, help='Targets list file (each line: IP or IP:PORT)')
-    parser.add_argument('--password', default='', type=str, help='Password spraying')
-    parser.add_argument('--merge', action='store_true', help='Merge and update all data in ./data into a single BC file')
-    parser.add_argument('--hiv', default='', help='Load Hikvision credentials file')
-    parser.add_argument('--live', default='', help='Filter currently active cameras in the BC file')
-    parser.add_argument('--update', action='store_true', help='Check for the latest version and update')
+    parser.add_argument('--key', default='', type=str, help='Fofa API key')
+
+    parser.add_argument('--ip', default='', type=str, help='IP:PORT or IP')
+    parser.add_argument('--ips', default='', type=str,
+                        help='Targets list file (each line: IP or IP:PORT)')
+
+    parser.add_argument('--password', default='', type=str,
+                        help='Password spraying')
+
+    parser.add_argument('--merge', action='store_true',
+                        help='Merge and update all data in ./data into a single BC file')
+
+    parser.add_argument('--hiv', default='',
+                        help='Load Hikvision credentials file')
+
+    parser.add_argument('--live', default='',
+                        help='Filter currently active cameras in the BC file')
+
+    parser.add_argument('--update', action='store_true',
+                        help='Check for the latest version and update')
+
+    parser.add_argument('--scan', action='store_true',
+                        help='Scan ports when RTSP port is unknown')
 
     args = parser.parse_args()
-    if args.update:
-        upd.check_current_version()
-        sys.exit(0)
-    if args.live:
-        cam.ping_live(args.live)
-        sys.exit(0)
-    if args.hiv:
-        read_and_exe_hik_credentials(args.hiv)
-        sys.exit(0)
-    if args.merge:
-        cam.merge_all_bc()
-    else:
-        # ---------- IPS Module ----------
-        if args.ips:
+
+    # ---------------- SCAN MODULE ----------------
+
+    if args.scan:
+
+        scanner = scan()
+
+        if args.ip:
+
+            if ':' in args.ip:
+                ip = args.ip.split(':')[0]
+            else:
+                ip = args.ip
+            try:    
+                prots =  scanner.run(ip,'rtsp')
+                if not prots['rtsp_port'][0]:
+                    log.warning("No RTSP port detected, skipping brute force...")
+                    return 0
+            except Exception as e:
+                log.error("SKIP...")
+                return 0
+            else:
+                port = prots['rtsp_port'][0]
+                # stat = cam.filter_ip(f"{ip}:{port}")
+                # if stat:
+                cam.run(
+                    ip,
+                    int(port),
+                    args.password
+                )
+        elif args.ips:
+
             log.info(f"Loaded ips file: [{args.ips}]")
+
             ips_list = read_ips(args.ips)
 
             if not ips_list:
                 sys.exit(0)
 
-            real = cam.filter_ips(ips_list)
-            for ip_ in real:
+            for i in ips_list:
+
                 try:
-                    ip = ip_.split(':')[0]
-                    port = int(ip_.split(':')[-1]) if ':' in ip_ else 554
-                    cam.run(ip, port, args.password)
+
+                    if ':' in i:
+                        ip = i.split(':')[0]
+                    else:
+                        ip = i
+
+                    try:    
+                        prots =  scanner.run(ip,'rtsp')
+                        if not prots['rtsp_port'][0]:
+                            log.warning("No RTSP port detected, skipping brute force...")
+                            return 0
+                    except Exception as e:
+                        log.error("SKIP...")
+                        return 0
+                    else:
+                        port = prots['rtsp_port'][0]
+                        # stat = cam.filter_ip(f"{ip}:{port}")
+                        # if stat:
+                        cam.run(
+                            ip,
+                            int(port),
+                            args.password
+                        )
+
+                    
                 except Exception:
                     log.error("Invalid format")
 
-        # ---------- FOFA Module ----------
+        else:
+            print("When using --scan you must specify --ip or --ips")
+
+        sys.exit(0)
+
+    # ---------------- UPDATE ----------------
+
+    if args.update:
+        upd.check_current_version()
+        sys.exit(0)
+
+    # ---------------- LIVE CHECK ----------------
+
+    if args.live:
+        cam.ping_live(args.live)
+        sys.exit(0)
+
+    # ---------------- HIKVISION MODULE ----------------
+
+    if args.hiv:
+        read_and_exe_hik_credentials(args.hiv)
+        sys.exit(0)
+
+    # ---------------- MERGE DATA ----------------
+
+    if args.merge:
+        cam.merge_all_bc()
+
+    else:
+
+        # ---------- IPS MODULE ----------
+
+        if args.ips:
+
+            log.info(f"Loaded ips file: [{args.ips}]")
+
+            ips_list = read_ips(args.ips)
+
+            if not ips_list:
+                sys.exit(0)
+ 
+            for ip_ in ips_list:
+
+                try:
+
+                    ip = ip_.split(':')[0]
+
+                    port = int(ip_.split(':')[-1]) if ':' in ip_ else 554
+                    # stat = cam.filter_ip(f"{ip}:{port}")
+                    # if stat:
+                    cam.run(ip, port, args.password)
+
+                except Exception:
+
+                    log.error("Invalid format")
+
+        # ---------- FOFA MODULE ----------
+
         elif args.key:
+
             fofa = Fofa()
+
             info = fofa.query(
                 key=args.key,
                 city=args.city,
@@ -161,28 +280,38 @@ def main():
             )
 
             if info:
-                real = cam.filter_ips(info)
-                for i in real:
+ 
+                for i in info:
+
                     ip = i.split(':')[0]
+
                     port = int(i.split(':')[-1])
+                    
                     cam.run(ip, port, args.password)
 
-        # ---------- Single IP Module ----------
-        elif args.ip:
-            if ':' not in args.ip:
-                log.error("Invalid format")
-                sys.exit(0)
+        # ---------- SINGLE TARGET ----------
 
+        elif args.ip:
+
+            if ':' not in args.ip:
+
+                log.error("Invalid format. Use IP:PORT")
+
+                sys.exit(0)
+ 
+            # stat = cam.filter_ip(f"{ip}:{port}")
+            # if stat :
             cam.run(
                 args.ip.split(':')[0],
                 int(args.ip.split(':')[-1]),
                 args.password
             )
 
-        # ---------- Help ----------
-        else:
-            parser.print_help()
+        # ---------- HELP ----------
 
+        else:
+
+            parser.print_help()
 
 if __name__ == '__main__':
     main() 
